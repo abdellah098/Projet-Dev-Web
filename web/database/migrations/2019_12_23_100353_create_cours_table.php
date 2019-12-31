@@ -17,13 +17,13 @@ class CreateCoursTable extends Migration
             $table->bigIncrements('id');
             $table->string("titre");
             $table->text("description");
-            $table->string("niveau");
-            $table->integer("duree");
+            $table->string("niveau")->nullable();
+            $table->integer("duree")->nullable();
             $table->string("document");
-            $table->string("categorie");
-            $table->string("difficulte");
-            $table->text("objectif");
-            $table->string("prerequis");
+            $table->string("categorie")->nullable();
+            $table->string("difficulte")->nullable();
+            $table->text("objectif")->nullable();
+            $table->string("prerequis")->nullable();
             $table->timestamps();
 
             $table->integer("professeur_id")->unique();

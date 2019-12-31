@@ -25,3 +25,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user', 'UserController@getAuthenticatedUser');
     Route::get('closed', 'DataController@closed');
 });
+
+// Prof Apis
+Route::post('cours','CoursController@store');

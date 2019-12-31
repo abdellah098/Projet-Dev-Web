@@ -8,6 +8,7 @@ class Cours extends Model
 {
     protected $fillable = [
         'titre', 'description', 'niveau', 'duree', 'document',
-        'categorie', 'difficulte', 'objectif', 'prerequis'
+        'categorie', 'difficulte', 'objectif', 'prerequis',
+        'professeur_id'
     ];
 }
