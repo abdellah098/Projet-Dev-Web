@@ -2,21 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use JWTAuth;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTFactory;
 use Illuminate\Support\Facades\Validator;
-use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class UserController extends Controller
 {
     public function authenticate(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+       
+        $user =  DB::table('users')->where('email', $request->get('email'))->first();
+        if($user == null) {
+                return response()->json(['error' => 'could_not_found_user'], 404); 
+        }
 
+        $credentials = $request->only('email', 'password');
         try {
-            if (! $token = JWTAuth::attempt($credentials)) {
+            if (! $token = auth()->claims(['id' => $user->id, 'statut' => $user->statut])->attempt($credentials)) {
                 return response()->json(['error' => 'invalid_credentials'], 400);
             }
         } catch (JWTException $e) {
@@ -35,6 +42,7 @@ class UserController extends Controller
             'password' => 'required|string|min:6',
             'password_confirmation' => 'min:6|same:password',
             'date_naissance' => 'required',
+            'statut' => 'required',
         ]);
 
         if($validator->fails()){
@@ -54,7 +62,7 @@ class UserController extends Controller
 
         ]);
 
-     
+        
 
         $token = JWTAuth::fromUser($user)  ;
 

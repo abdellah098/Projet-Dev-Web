@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Tymon\JWTAuth\Facades\JWTAuth;
 use auth;
 use App\User;
 use App\Models\Cours;
@@ -18,8 +18,8 @@ class CoursController extends Controller
     public function index()
     {
         //
+    
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -38,38 +38,29 @@ class CoursController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'titre' => 'required',
-            'description' => 'required',
-            'document' => 'required',           
-            ]);
+        $token = JWTAuth::getToken();
+        $playload = JWTAuth::getPayload($token)->toArray();
         
-        
-        if($validator->fails()){
-                return response()->json($validator->errors()->toJson(), 400);
+        if($playload['statut'] == 'teacher') {
+            $validator = $this->validateCours($request);
+            if($validator->fails()){
+                    return response()->json($validator->errors()->toJson(), 400);
+            }
+    
+            try {
+                $user = auth()->userOrFail();
+            } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
+                return response()->json(['error' => $e->getMessage()]);
+            }
+    
+            $cours = $this->createCours($request);
+            $cours['professeur_id'] = $playload['id'];
+            $cours = Cours::create($cours);
+            
+            return response()->json(['success' => 'the_course_is_created'], 201);
+        } else {
+            return response()->json(['error' => 'user_is_not_teacher'], 404);
         }
-
-        try {
-            $user = auth()->userOrFail();
-        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
-            return response()->json(['error' => $e->getMessage()]);
-        }
-        
-         $cours = Cours::create([
-            'titre' => $request->get('titre'),
-            'description' =>$request->get('description'),
-            'niveau' => $request->get('niveau'),
-            'duree' => $request->get('duree'),
-            'document' =>$request->get('document'),
-            'categorie' =>$request->get('statut'),
-            'difficulte' =>$request->get('difficulte'),
-            'objectif' =>$request->get('objectif'),
-            'prerequis' =>$request->get('prerequis'),
-            'professeur_id' => $user->id,
-
-        ]);
-        
-        return ($cours);
     }
 
     /**
@@ -116,12 +107,27 @@ class CoursController extends Controller
     {
         //
     }
-    protected function validateCours()
+    protected function validateCours(Request $request)
     {
-        return request()->validate([
+        return Validator::make($request->all(), [
             'titre' => 'required',
             'description' => 'required',
-            'document' => 'required',
-        ]);
+            'document' => 'required',           
+            ]);
+    }
+    protected function createCours(Request $request)
+    {
+        return [
+            'titre' => $request->get('titre'),
+            'description' =>$request->get('description'),
+            'niveau' => $request->get('niveau'),
+            'duree' => $request->get('duree'),
+            'document' =>$request->get('document'),
+            'categorie' =>$request->get('statut'),
+            'difficulte' =>$request->get('difficulte'),
+            'objectif' =>$request->get('objectif'),
+            'prerequis' =>$request->get('prerequis'),
+            'professeur_id' => '',
+        ];
     }
 }
