@@ -19,7 +19,7 @@ class CreateEtudiantsTable extends Migration
             $table->integer("nbr_cours_suivis")->default(0);
             $table->integer("nbr_cours_complete")->default(0);            
             
-            $table->integer("user_id")->unique();
+            $table->integer("user_id");
 
             $table->timestamps();
         });

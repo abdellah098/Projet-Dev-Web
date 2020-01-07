@@ -18,7 +18,7 @@ class CreateProfesseursTable extends Migration
             $table->string("grade");
             $table->string("nbr_cours");            
             
-            $table->integer("user_id")->unique();
+            $table->integer("user_id");
 
             $table->timestamps();
         });

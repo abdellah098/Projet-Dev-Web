@@ -46,15 +46,13 @@ class CoursController extends Controller
             if($validator->fails()){
                     return response()->json($validator->errors()->toJson(), 400);
             }
-    
-            try {
-                $user = auth()->userOrFail();
-            } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
-                return response()->json(['error' => $e->getMessage()]);
-            }
-    
+            
+
+            return $request;
             $cours = $this->createCours($request);
             $cours['professeur_id'] = $playload['id'];
+            $cours['document'] = $this->storefiles($request,'document');
+            $cours['image_cours'] = $this->storefiles($request,'image_cours');
             $cours = Cours::create($cours);
             
             return response()->json(['success' => 'the_course_is_created'], 201);
@@ -94,7 +92,7 @@ class CoursController extends Controller
      */
     public function update(Request $request, Cours $cours)
     {
-        //
+        
     }
 
     /**
@@ -112,7 +110,8 @@ class CoursController extends Controller
         return Validator::make($request->all(), [
             'titre' => 'required',
             'description' => 'required',
-            'document' => 'required',           
+            'document' => 'required',
+            'image_cours' => 'required|max:1999',           
             ]);
     }
     protected function createCours(Request $request)
@@ -122,12 +121,40 @@ class CoursController extends Controller
             'description' =>$request->get('description'),
             'niveau' => $request->get('niveau'),
             'duree' => $request->get('duree'),
-            'document' =>$request->get('document'),
+            'document' => '',
             'categorie' =>$request->get('statut'),
             'difficulte' =>$request->get('difficulte'),
             'objectif' =>$request->get('objectif'),
             'prerequis' =>$request->get('prerequis'),
+            'image_cours' => '',
             'professeur_id' => '',
         ];
+    }
+    public static function storefiles(Request $request,$fileAttribute)
+    {
+        
+            $path;
+            $imagesExt = array('png', 'gif', 'jpg');
+            //Get the file name with the extension
+            $fileNameWithExt = $request->file('cours_image')->getClientOriginalName();
+
+            //Get file extension
+            $extension = $request->file('cours_image')->getClientOriginalExtension();
+
+            //Get just file name
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME); 
+        
+            //file to store
+            $fileToStore = $filename.'_'.time().'.'.$extension;
+            $value = $extension;
+
+            if(in_array(strtolower($value), $imagesExt, TRUE)) {
+                 $path = $request->file($fileAttribute)->storeAs('public/images', $fileToStore); 
+            } else {
+                 $path = $request->file($fileAttribute)->storeAs('public/courses', $fileToStore); 
+            }
+         return $path;
+        
+        
     }
 }

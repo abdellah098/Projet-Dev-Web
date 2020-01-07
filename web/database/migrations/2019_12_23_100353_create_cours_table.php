@@ -24,9 +24,10 @@ class CreateCoursTable extends Migration
             $table->string("difficulte")->nullable();
             $table->text("objectif")->nullable();
             $table->string("prerequis")->nullable();
+            $table->string('image_cours')->nullable();
             $table->timestamps();
 
-            $table->integer("professeur_id")->unique();
+            $table->integer("professeur_id");
         });
     }
 

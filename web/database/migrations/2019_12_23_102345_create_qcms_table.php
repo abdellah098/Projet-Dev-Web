@@ -17,7 +17,7 @@ class CreateQcmsTable extends Migration
             $table->bigIncrements('id');
             $table->string("titre");           
 
-            $table->integer("cours_id")->unique();
+            $table->integer("cours_id");
 
             $table->timestamps();
 
