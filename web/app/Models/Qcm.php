@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Qcm extends Model
 {
     protected $fillable = [
-        'titre', 'cours_id'
+         'cours_id'
     ];
+   
+
+
 }

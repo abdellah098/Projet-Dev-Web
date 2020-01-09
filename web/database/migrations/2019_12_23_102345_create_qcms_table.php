@@ -14,8 +14,7 @@ class CreateQcmsTable extends Migration
     public function up()
     {
         Schema::create('qcms', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string("titre");           
+            $table->bigIncrements('id');          
 
             $table->integer("cours_id");
 
