@@ -28,3 +28,5 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
 // Prof Apis
 Route::post('cours','CoursController@store');
+
+Route::post('questions', 'QuizController@store');
