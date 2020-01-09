@@ -3,19 +3,23 @@
 namespace App\Http\Controllers;
 use auth;
 use App\User;
+use App\Professeur;
 use App\Models\Cours;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\ProfesseurController;
 
 class CoursController extends Controller
 {
     
-    public function index()
+    public function index($professeur_id)
     {
-        //
-    
+       
+        $courses =  Cours::where('professeur_id', $professeur_id)->get();
+        
+        return response()->json($courses);
     }
    
     public function create()
@@ -38,7 +42,11 @@ class CoursController extends Controller
             
             $cours = $this->createCours($request);
 
-            $cours['professeur_id'] = $playload['id'];
+            //the teacher of the course
+            $teacher = ProfesseurController::selectTeacher($playload['id']);
+            $teacher->nbr_cours = $teacher->nbr_cours + 1;
+            $teacher->save();
+            $cours['professeur_id'] = $teacher->id;
             
             // store files
 
@@ -48,7 +56,7 @@ class CoursController extends Controller
             $cours = Cours::create($cours);
             
             
-            return response()->json(['success' => 'the_course_is_created','cours_id' => $cours->id], 201);
+            return response()->json(['success' => 'the_course_is_created','teacher_id' => $teacher->id], 201);
         } else {
             return response()->json(['error' => 'user_is_not_teacher'], 404);
         }

@@ -42,11 +42,6 @@ class QuizController extends Controller
         //
     }
 
-   
-    public function edit(Qcm $qcm)
-    {
-        //
-    }
 
     
     public function update(Request $request, Qcm $qcm)
@@ -54,9 +49,5 @@ class QuizController extends Controller
         //
     }
 
-    
-    public function destroy(Qcm $qcm)
-    {
-        //
-    }
+
 }

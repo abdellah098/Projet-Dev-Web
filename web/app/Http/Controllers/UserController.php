@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTFactory;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Http\Controllers\EtudiantController;
+use App\Http\Controllers\ProfesseurController;
 
 class UserController extends Controller
 {
@@ -62,7 +64,11 @@ class UserController extends Controller
 
         ]);
 
-        
+        //create teacher or student object depending on the status
+        if($user->statut =='teacher')
+                ProfesseurController::store($user->id);
+        else
+                EtudiantController::store($user->id);
 
         $token = JWTAuth::fromUser($user)  ;
 

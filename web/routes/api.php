@@ -30,3 +30,5 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 Route::post('cours','CoursController@store');
 
 Route::post('questions', 'QuizController@store');
+
+Route::get('cours/mescours/{professeur_id}', 'CoursController@index');12

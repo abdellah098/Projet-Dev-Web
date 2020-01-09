@@ -15,8 +15,8 @@ class CreateProfesseursTable extends Migration
     {
         Schema::create('professeurs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string("grade");
-            $table->string("nbr_cours");            
+            $table->string("grade")->default("");
+            $table->integer("nbr_cours")->default(0);            
             
             $table->integer("user_id");
 
