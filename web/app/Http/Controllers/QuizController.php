@@ -23,17 +23,24 @@ class QuizController extends Controller
     
     public function store(Request $request)
     {
+        $token = JWTAuth::getToken();
+        $playload = JWTAuth::getPayload($token)->toArray();
         
-        $quiz = Qcm::create([
-            'cours_id' => $request->get('cours_id'),
-        ]);
+        if($playload['statut'] == 'teacher') {
+            $quiz = Qcm::create([
+                'cours_id' => $request->get('cours_id'),
+            ]);
+        
+            //$questions = json_decode($request->get('questions',TRUE));
     
-        //$questions = json_decode($request->get('questions',TRUE));
-
-        $questions = $request->get('questions');
-        QuestionController::storeQuestions($questions,1);    
+            $questions = $request->get('questions');
+            QuestionController::storeQuestions($questions,$quiz->cours_id);    
+            
+            return response()->json(['success' => 'Quiz_is_created'],201);
+        } else {
+            return response()->json(['error' => 'user_is_not_teacher'], 404);
+        }
         
-        return response()->json(['success' => 'Quiz_is_created'],201);
     }
 
     

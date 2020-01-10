@@ -63,7 +63,7 @@ class CoursController extends Controller
             $cours = Cours::create($cours);
             
             
-            return response()->json(['success' => 'the_course_is_created','teacher_id' => $teacher->id], 201);
+            return response()->json(['success' => 'the_course_is_created','teacher_id' => $teacher->id, 'cours_id' => $cours], 201);
         } else {
             return response()->json(['error' => 'user_is_not_teacher'], 404);
         }
