@@ -17,4 +17,8 @@ class ProfesseurController extends Controller
     {
         return   Professeur::where('user_id', $user_id)->first();
     }
+    public static function isTeacher($user_id)
+    {
+        return ((new self())->selectTeacher($user_id) != null);
+    }
 }

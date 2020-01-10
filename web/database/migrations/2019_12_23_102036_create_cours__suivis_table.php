@@ -17,7 +17,7 @@ class CreateCoursSuivisTable extends Migration
             $table->bigIncrements('id');
             $table->integer("note")->default(0);
             
-            $table->integer("user_id");
+            $table->integer("etudiant_id");
             $table->integer("cours_id");
 
             $table->timestamps();

@@ -31,4 +31,12 @@ Route::post('cours','CoursController@store');
 
 Route::post('questions', 'QuizController@store');
 
-Route::get('cours/mescours/{professeur_id}', 'CoursController@index');12
+Route::get('cours/mescours/{user_id}', 'CoursController@index');
+
+Route::get('cours/{cours_id}', 'CoursController@show');
+
+
+// Student Apis
+
+Route::get('lescours', 'CoursController@allCourses');
+//Route::post('')

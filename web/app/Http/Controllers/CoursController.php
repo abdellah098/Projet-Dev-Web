@@ -14,12 +14,18 @@ use App\Http\Controllers\ProfesseurController;
 class CoursController extends Controller
 {
     
-    public function index($professeur_id)
+    public function index($user_id)
     {
        
-        $courses =  Cours::where('professeur_id', $professeur_id)->get();
+        if(ProfesseurController::isTeacher($user_id)) {
+
+            $professeur_id = ProfesseurController::selectTeacher($user_id);
+            $courses =  Cours::where('professeur_id', $professeur_id)->get();
         
-        return response()->json($courses);
+            return response()->json($courses);
+        } else {
+            return response()->json(['error' => 'user_is_not_teacher'], 404);
+        }
     }
    
     public function create()
@@ -63,9 +69,22 @@ class CoursController extends Controller
     }
 
     
-    public function show(Cours $cours)
+    public function show($cours_id)
     {
-        //
+        if( ! $course = Cours::find($cours_id))
+            return response()->json(['error' => 'cours_not_found'],404);
+
+        $teacher = Professeur::find($course->professeur_id);
+
+        $user = User::find($teacher->id);
+        $teacher_infos = [
+            'nom' => $user->name,
+            'prenom' => $user->prenom,
+            'email' => $user->email,
+            'mini_bio' => $user->mini_bio,
+        ];
+
+        return response()->json(['course' => $course,'teacher' => $teacher_infos]);
     }
 
    
@@ -120,8 +139,14 @@ class CoursController extends Controller
 
         $file_to_store = $file_name.'_'.time().'.'.$file_extension;
 
-        Storage::put($file_to_store, $file_decode);
+        //Storage::put($file_to_store, $file_decode);
+        Storage::disk('local')->put($file_to_store, $file_decode);
         
         return $file_to_store;
+    }
+
+    public function allCourses()
+    {
+        return response()->json(['courses' => Cours::all()]);
     }
 }
