@@ -18,10 +18,11 @@ class CoursController extends Controller
     {
        
         if(ProfesseurController::isTeacher($user_id)) {
-
-            $professeur_id = ProfesseurController::selectTeacher($user_id);
-            $courses =  Cours::where('professeur_id', $professeur_id)->get();
-        
+            
+            $teacher = ProfesseurController::selectTeacher($user_id);
+             
+            $courses =  Cours::where('professeur_id',$teacher->id)->get();
+             
             return response()->json($courses);
         } else {
             return response()->json(['error' => 'user_is_not_teacher'], 404);
