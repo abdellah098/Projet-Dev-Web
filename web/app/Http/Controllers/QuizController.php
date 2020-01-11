@@ -31,9 +31,8 @@ class QuizController extends Controller
                 'cours_id' => $request->get('cours_id'),
             ]);
         
-            //$questions = json_decode($request->get('questions',TRUE));
+            $questions = json_decode($request->get('questions'),True);
     
-            $questions = $request->get('questions');
             QuestionController::storeQuestions($questions,$quiz->cours_id);    
             
             return response()->json(['success' => 'Quiz_is_created'],201);

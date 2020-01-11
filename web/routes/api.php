@@ -39,4 +39,5 @@ Route::get('cours/{cours_id}', 'CoursController@show');
 // Student Apis
 
 Route::get('lescours', 'CoursController@allCourses');
-//Route::post('')
+
+Route::post('cours/inscription','EtudiantController@subscribe');
