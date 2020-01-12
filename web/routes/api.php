@@ -27,6 +27,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 });
 
 // Prof Apis
+
 Route::post('cours','CoursController@store');
 
 Route::post('questions', 'QuizController@store');
@@ -38,6 +39,16 @@ Route::get('cours/{cours_id}', 'CoursController@show');
 
 // Student Apis
 
-Route::get('lescours', 'CoursController@allCourses');
+Route::post('lescours', 'CoursController@allCourses'); //retour tous les cours avec pagination paramétres keyword,page per_page 
 
-Route::post('cours/inscription','EtudiantController@subscribe');
+Route::post('cours/inscription','EtudiantController@subscribe'); //insciption à un cours paramétre token, cours_id
+
+Route::delete('cours/deinscription/{cours_id}', 'EtudiantController@unsubscribe');//deinsciption à un cours paramétre token, cours_id
+
+Route::post('quiz/questions', 'QuizController@courseQuiz');// 1 return le quiz d'un cours paramétre cours_id
+
+Route::post('/cours/cours_suivis', 'EtudiantController@myCourses');// 2 retourne tous les cours suivis par un etudiant paramétre : token cours_id
+
+Route::post('/user/informations','UserController@information'); // 3 retourne le mail,nom,prenom d'un utilisateur paramètre: token
+
+Route::post('cours/cours_suivis/id', 'EtudiantController@myCoursesIds');//  4 retourne un array des id des cours suivis par un etudiant paramétre:121 token

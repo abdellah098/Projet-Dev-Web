@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Etudiant;
 use App\Models\UserToken;
+
 use App\Models\Cours_Suivis;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class EtudiantController extends Controller
 {
@@ -30,9 +32,18 @@ class EtudiantController extends Controller
 
         return response()->json(['error' => 'user_is_not_student'],201);
     }
-    public function unsubscribe(Request $request)
+    public function unsubscribe($cours_id)
     {
         $playload = UserToken::userPlaylod();
-        
+       
+        $student = Etudiant::selectStudent($playload['id']);
+
+        $cours_suivis = Cours_Suivis::where('etudiant_id', $student->id)
+          ->where('cours_id', $cours_id)
+          ->first();
+
+        $cours_suivis->delete();
+
+        return response()->json(['success' => 'cours_is_deleted'],201);
     }
 }

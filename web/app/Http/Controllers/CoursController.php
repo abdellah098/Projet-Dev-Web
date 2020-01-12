@@ -5,6 +5,7 @@ use auth;
 use App\User;
 use App\Professeur;
 use App\Models\Cours;
+use App\Models\UserToken;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Storage;
@@ -37,9 +38,8 @@ class CoursController extends Controller
     
     public function store(Request $request)
     {
-        $token = JWTAuth::getToken();
-        $playload = JWTAuth::getPayload($token)->toArray();
-        
+        $playload = UserToken::userPlaylod();
+
         if($playload['statut'] == 'teacher') {
             $validator = $this->validateCours($request);
             if($validator->fails()){
@@ -146,8 +146,24 @@ class CoursController extends Controller
         return $file_to_store;
     }
 
-    public function allCourses()
+    public function allCourses(Request $request)
     {
-        return response()->json(['courses' => Cours::all()]);
+        $keyword = $request->get('keyword');
+
+        if(empty($keyword)) {
+            $cours = Cours::all();
+            $nombre_cours = $cours->count();
+
+            $chunk = $cours->forPage($request->get('page'), $request->get('per_page'));
+
+            return response()->json(['cours' => $chunk->all(),'nombre_cours' => $nombre_cours]);
+        } else {
+            $cours = Cours::where('titre','like', '%'.$keyword.'%')->get();
+            $nombre_cours = $cours->count();
+            $chunk = $cours->forPage($request->get('page'), $request->get('per_page'));
+
+            return response()->json(['cours' => $chunk->all(),'nombre_cours' => $nombre_cours]);
+        }
+                
     }
 }
