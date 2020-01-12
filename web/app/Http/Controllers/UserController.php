@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use JWTAuth;
 use App\User;
+use App\Models\UserToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -98,5 +99,14 @@ class UserController extends Controller
                 }
 
                 return response()->json(compact('user'));
+        }
+         public function information(Request $request)
+        {
+                $playload = UserToken::userPlaylod();
+
+                $user = User::find($playload['id']);
+
+                return response()->json(['nom' => $user->name, 'prenom' => $user->prenom, 'email' => $user->email]);
+                
         }
 }

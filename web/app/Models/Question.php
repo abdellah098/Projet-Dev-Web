@@ -15,7 +15,7 @@ class Question extends Model
     public static function quizQuestion($quiz_id)
     {
         $questions = (new self())::where('qcm_id', $quiz_id)->get();
-        
-        return  QuestionCollection::collection($questions);
+        $nombre_question = $questions->count();
+        return  ['Questions' => QuestionCollection::collection($questions), 'nombre' => $nombre_question];
     }
 }

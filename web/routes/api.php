@@ -47,8 +47,8 @@ Route::delete('cours/deinscription/{cours_id}', 'EtudiantController@unsubscribe'
 
 Route::post('quiz/questions', 'QuizController@courseQuiz');// 1 return le quiz d'un cours paramétre cours_id
 
-Route::post('/cours/cours_suivis', 'EtudiantController@myCourses');// 2 retourne tous les cours suivis par un etudiant paramétre : token cours_id
+Route::post('/cours/cours_suivis', 'EtudiantController@myCourses');// 2 retourne tous les cours suivis par un etudiant paramétre : token 
 
 Route::post('/user/informations','UserController@information'); // 3 retourne le mail,nom,prenom d'un utilisateur paramètre: token
 
-Route::post('cours/cours_suivis/id', 'EtudiantController@myCoursesIds');//  4 retourne un array des id des cours suivis par un etudiant paramétre:121 token
+Route::post('cours/cours_suivis/id', 'EtudiantController@myCoursesIds');//  4 retourne un array des id des cours suivis par un etudiant paramétre:token

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Cours_Suivis;
 use Illuminate\Database\Eloquent\Model;
 
 class Etudiant extends Model
@@ -16,5 +17,9 @@ class Etudiant extends Model
     public static function selectStudent($user_id)
     {
         return (new self())::where('user_id',$user_id)->first();
+    }
+    public static function Courses($etudiant_id)
+    {
+        return Cours_Suivis::where('etudiant_id',$etudiant_id)->get();
     }
 }
