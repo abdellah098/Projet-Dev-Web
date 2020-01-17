@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Etudiant;
 use App\Models\Qcm;
+use App\Models\Answer;
 use App\Models\Question;
 use App\Models\UserToken;
+use App\Models\Cours_Suivis;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\QuestionController;
 
 class QuizController extends Controller
@@ -53,9 +57,41 @@ class QuizController extends Controller
 
 
     
-    public function update(Request $request, Qcm $qcm)
+    public function validerQuiz(Request $request)
     {
-        //
+        
+        $playload = UserToken::userPlaylod();
+        $student = Etudiant::selectStudent($playload['id']);
+
+        $cours_suivi = Cours_Suivis::where('etudiant_id',$student->id)
+        ->where('cours_id', $request->get('cours_id'))
+        ->first();
+
+        //$questions = json_decode($request->get('questions'),True);
+        $questions = $request->get('questions');
+        
+        $score = 0;
+        foreach ($questions as $question) {
+
+            $good_answers = Answer::questionGoodAnswers($question['question_id'])->pluck('id');
+            $user_answers = $question['answers'];
+              
+            $score += (int)AnswerController::compareAnswers($user_answers, $good_answers);
+        }
+
+        $nb_question = count($questions);
+        $min_score = (int)round(($nb_question * 70) / 100);
+
+        $cours_suivi->note = $score;
+        if($score >= $min_score)
+            $cours_suivi->valide = true;
+        
+        $cours_suivi->save();
+
+        if($score >= $min_score)
+            return response()->json(['etat' => 'valide', 'score' => $score]);
+        return response()->json(['etat' => ' non valide', 'score' => $score]);
+
     }
 
 

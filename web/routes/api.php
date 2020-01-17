@@ -52,3 +52,6 @@ Route::post('/cours/cours_suivis', 'EtudiantController@myCourses');// 2 retourne
 Route::post('/user/informations','UserController@information'); // 3 retourne le mail,nom,prenom d'un utilisateur paramètre: token
 
 Route::post('cours/cours_suivis/id', 'EtudiantController@myCoursesIds');//  4 retourne un array des id des cours suivis par un etudiant paramétre:token
+
+Route::post('cours/valider_quiz', 'QuizController@validerQuiz');  // validation d'un quiz
+

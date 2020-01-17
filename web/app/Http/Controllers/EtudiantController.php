@@ -9,6 +9,7 @@ use App\Models\UserToken;
 use App\Models\Cours_Suivis;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Http\Resources\StudentCoursesRessource;
 
 class EtudiantController extends Controller
 {
@@ -54,9 +55,9 @@ class EtudiantController extends Controller
 
             $student = Etudiant::selectStudent($playload['id']);
 
+            $myCourses =  Etudiant::Courses($student->id);
             $cours_ids =  Etudiant::Courses($student->id)->pluck('id');
-
-            return Cours::find($cours_ids);
+            return  response()->json(['Courses' => Cours::find($cours_ids), 'Cours_suivi' => $myCourses]);
         }
         else
         return response()->json(['error' => 'user_is_not_student'],404);

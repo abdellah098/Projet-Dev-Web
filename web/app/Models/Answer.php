@@ -15,4 +15,11 @@ class Answer extends Model
   {
      return (new self())::where('question_id', $question_id)->get();
   }
+
+  public static function questionGoodAnswers($question_id)
+    {
+        return (new self())::where('question_id', $question_id)
+        ->where('is_correct', true)
+        ->get();
+    }
 }
