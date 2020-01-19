@@ -57,7 +57,7 @@ class EtudiantController extends Controller
 
             $myCourses =  Etudiant::Courses($student->id);
             $cours_ids =  Etudiant::Courses($student->id)->pluck('id');
-            return  response()->json(['Courses' => Cours::find($cours_ids), 'Cours_suivi' => $myCourses]);
+            return  response()->json(['Courses' => $cours_ids, 'Cours_suivi' => $myCourses]);
         }
         else
         return response()->json(['error' => 'user_is_not_student'],404);

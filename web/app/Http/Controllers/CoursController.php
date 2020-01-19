@@ -95,15 +95,28 @@ class CoursController extends Controller
     }
 
    
-    public function update(Request $request, Cours $cours)
+    public function update(Request $request)
     {
-        
+        $course = Cours::find($request->get('cours_id'));
+
+        $cours->titre = $request->get('titre');
+        $cours->document = $request->get('document');
+
+        $cours->description = $request->get('description');
+        $cours->image_cours = $request->get('image_cours');
+
+        $course->save();
+
+        return response()->json(['Etat' => 'le cours à été mis à jour']);
+
     }
 
     
-    public function destroy(Cours $cours)
+    public function getCourse(Request $request)
     {
-        //
+        $course = Cours::find($request->get('cours_id'));
+
+        return response()->json($course);
     }
     protected function validateCours(Request $request)
     {

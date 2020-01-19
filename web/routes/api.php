@@ -36,6 +36,10 @@ Route::get('cours/mescours/{user_id}', 'CoursController@index');
 
 Route::get('cours/{cours_id}', 'CoursController@show');
 
+Route::post('cours/cours_a_jour', 'CoursController@getCourse');
+
+Route::post('couRS/course_a_jour', 'CoursController@update');
+
 
 // Student Apis
 
