@@ -55,9 +55,15 @@ class EtudiantController extends Controller
 
             $student = Etudiant::selectStudent($playload['id']);
 
-            $myCourses =  Etudiant::Courses($student->id);
-            $cours_ids =  Etudiant::Courses($student->id)->pluck('id');
-            return  response()->json(['Courses' => $cours_ids, 'Cours_suivi' => $myCourses]);
+            $cours_suivis_ids =  Etudiant::Courses($student->id)->pluck('id');
+            $cours_suivis_ids = array_unique($cours_suivis_ids);
+
+            $cours_suivis = Cours_Suivis::find($cours_suivis_ids);
+            $courses_id = $cours_suivis->pluc('cours_id');
+            
+            $courses = Cours::find($courses_id);
+
+            return  response()->json(['Courses' => $courses, 'Cours_suivi' => $cours_suivis]);
         }
         else
         return response()->json(['error' => 'user_is_not_student'],404);
@@ -70,7 +76,7 @@ class EtudiantController extends Controller
 
             $student = Etudiant::selectStudent($playload['id']);
 
-            return Etudiant::Courses($student->id)->pluck('id');
+            $cours_Etudiant::Courses($student->id)->pluck('id');
         }
         else
         return response()->json(['error' => 'user_is_not_student'],404);
