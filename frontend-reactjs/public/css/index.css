@@ -1,0 +1,65 @@
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,900&display=swap');
+html{
+    font-family: Montserrat;
+}
+.auth-btn{
+    margin-left: 0 !important;
+    margin-right: 10px !important;
+}
+
+.purple-custom {
+    background-color: #7451eb;
+}
+
+.feauture-img{
+    margin-bottom:-40px;
+}
+.monsterrat{
+    font-family: Montserrat;
+}
+
+.feauture-desc{
+    margin-top: 10%;
+    line-height: 2.5rem;
+    font-size: x-large;    
+}
+.section-margin{
+    margin-right:5%;
+    margin-left: 5%;
+}
+
+.about-headline{
+line-height: 140%;
+}
+
+.text-justify{
+    text-align: justify;
+}
+
+.line-height-2em{
+    line-height: 2em;
+}
+
+.fullwidth{
+    width:100%;
+}
+
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    width:100%;
+  }
+
+
+  .Site {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  
+  .Site-content {
+    flex: 1;
+  }
+  

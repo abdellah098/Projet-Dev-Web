@@ -1,0 +1,228 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,900&display=swap');
+html{
+    font-family: Montserrat !important;
+}
+body {
+  font-family: Montserrat !important;
+}
+.auth-btn{
+    margin-left: 0 !important;
+    margin-right: 10px !important;
+}
+
+.purple-custom {
+    background-color: #7451eb;
+}
+
+.feauture-img{
+    margin-bottom:-40px;
+}
+.monsterrat{
+    font-family: Montserrat;
+}
+
+.feauture-desc{
+    margin-top: 10%;
+    line-height: 2.5rem;
+    font-size: x-large;    
+}
+.section-margin{
+    margin-right:5%;
+    margin-left: 5%;
+}
+
+.about-headline{
+line-height: 140%;
+}
+
+.text-justify{
+    text-align: justify;
+}
+
+.line-height-2em{
+    line-height: 2em;
+}
+
+.fullwidth{
+    width:100%;
+}
+
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    width:100%;
+  }
+
+
+  .Site {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  
+  .Site-content {
+    flex: 1;
+  }
+  
+  .padding-left-300 {
+    padding-left: 300px;
+  }
+
+  .container {
+    margin-top: 1% !important;
+  }
+  @media only screen and (max-width : 992px) {
+    header, main, footer {
+      padding-left: 0 !important;
+    }
+  }
+
+  @media only screen and (min-width: 993px){
+    .container{
+      width:66% !important;
+      margin-left:32% !important
+    }
+  }
+
+  @media only screen and (min-width: 1200px){
+    .container{
+      width:70% !important;
+      margin-left:26% !important
+    }
+    .margin-left-50{
+      margin-left: 30%;
+    } 
+  }
+
+  @media only screen and (max-width: 601px){
+    .container {
+        width:94% !important;
+      }
+  }
+  .bg-color-black{
+    background-color: #2A2D33 !important
+  }
+
+  .color-black{
+      color:#2A2D33 !important
+  }
+
+  li > a{
+    color:white !important
+  }
+
+  .sidenav li>a>i{
+    color:white !important;
+  }
+
+  .sidenav li>a {
+    font-size: 16px !important;
+    height: 68px !important;
+    padding: 10px 32px !important;
+  }
+
+  .pagination li a{
+    color: #444 !important;
+  }
+
+  .pagination li {
+    height: 60px !important;
+    padding: 15px !important;
+  }
+  .d-flex{
+  display:flex;
+
+  } 
+  .align-items-center{
+    align-items: center;
+  }
+
+  .collection > li > .row{
+    margin:auto
+  }
+
+  .fontSize13{
+    font-size: 13px;
+  }
+
+  .sidenav .collapsible>li {
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    transition: background-color .2s;
+  }
+
+  .sidenav .logo-container {
+    padding: 0 16px !important;
+    height: 64px !important;
+    line-height: 64px !important;
+    font-size: 24px !important;
+    border-bottom: 1px solid rgba(0,0,0,0.2) !important;
+    box-sizing: content-box !important;
+}
+
+
+.sidenav .user-view {
+  position: relative !important;
+  margin-bottom: 8px !important;
+  padding:0px !important
+}
+
+.profile-picture{
+  margin-top: 8px;
+  border: 3px solid lightgreen;
+}
+
+.user-view .row{
+  margin-bottom: 0px;
+}
+
+.collapsible-accordion > li:hover{
+  background-color: #0093b9;
+}
+
+.margin-bottom-0{
+  margin-bottom: 0px !important;
+}
+
+.margin-top-56{
+  margin-top: 56px !important;
+}
+
+
+
+.materialert{
+    position: relative !important;
+    min-width: 150px !important;
+    padding: 15px !important;
+    margin-bottom: 20px !important;
+    margin-top: 15px !important;
+    border: 1px solid transparent !important;
+    border-radius: 4px !important;
+    transition: all 0.1s linear !important;
+    webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2) !important;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2) !important;
+    display: -webkit-box !important;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-align: center !important;
+    -webkit-align-items: center !important;
+    -ms-flex-align: center !important;
+    align-items: center !important;
+}
+.materialert .material-icons{
+    margin-right: 10px !important;
+}
+
+.materialert.success{
+  background-color: #43a047 !important;
+  color: #fff !important;
+}
+
+.placeholder ::placeholder {
+  color: black;
+}
+
+.quiz > a.collection-item.active {
+  background-color:#039be5 !important
+}
